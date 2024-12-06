@@ -5,7 +5,7 @@ import kotlin.math.absoluteValue
 fun main() {
     partOneTest()
 
-    val puzzleInput = parseInput("Day01.txt")
+    val puzzleInput = parseInput("Day02.txt")
     val resultPartOne = partOne(puzzleInput)
     println("Part One: $resultPartOne")
 
@@ -14,7 +14,7 @@ fun main() {
     println("Part Two: $resultPartTwo")
 }
 
-fun partOneTest() {
+private fun partOneTest() {
     val input = parseInput("Day01_test.txt")
     val result = partOne(input)
 
@@ -22,7 +22,7 @@ fun partOneTest() {
     println("partOneTest successful!")
 }
 
-fun partTwoTest() {
+private fun partTwoTest() {
     val input = parseInput("Day01_test.txt")
     val result = partTwo(input)
 
@@ -30,7 +30,7 @@ fun partTwoTest() {
     println("partTwoTest successful!")
 }
 
-fun partOne(input: Pair<List<Int>, List<Int>>): Int {
+private fun partOne(input: Pair<List<Int>, List<Int>>): Int {
     val left = input.first.sorted()
     val right = input.second.sorted()
 
@@ -39,7 +39,7 @@ fun partOne(input: Pair<List<Int>, List<Int>>): Int {
     }.sum()
 }
 
-fun partTwo(input: Pair<List<Int>, List<Int>>): Int {
+private fun partTwo(input: Pair<List<Int>, List<Int>>): Int {
     val left = input.first
     val right = input.second
 
@@ -48,7 +48,7 @@ fun partTwo(input: Pair<List<Int>, List<Int>>): Int {
     }
 }
 
-fun parseInput(filename: String): Pair<List<Int>, List<Int>> {
+private fun parseInput(filename: String): Pair<List<Int>, List<Int>> {
     val raw: List<String> = readInput(filename)
     val left: MutableList<Int> = mutableListOf()
     val right: MutableList<Int> = mutableListOf()
