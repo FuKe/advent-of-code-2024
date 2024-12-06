@@ -1,7 +1,6 @@
 package dk.vighdata
 
 import kotlin.math.absoluteValue
-import kotlin.math.max
 
 fun main() {
     partOneTest()
