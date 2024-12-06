@@ -10,9 +10,9 @@ fun main() {
     val resultPartOne = partOne(puzzleInput)
     println("Part One: $resultPartOne")
 
-//    partTwoTest()
-//    val resultPartTwo = partTwo(puzzleInput)
-//    println("Part Two: $resultPartTwo")
+    partTwoTest()
+    val resultPartTwo = partTwo(puzzleInput)
+    println("Part Two: $resultPartTwo")
 }
 
 private fun partOneTest() {
@@ -27,36 +27,62 @@ private fun partTwoTest() {
     val input = parseInput("Day02_test.txt")
     val result = partTwo(input)
 
-    TODO()
-    println("partTwoTest successful!")
+    assert(result == 4) { println("Actual was $result")}
+    println("partOneTest successful!")
 }
 
 private fun partOne(input: List<List<Int>>): Int {
     var safeReports = 0
 
     input.forEach { report ->
-        var increases = 0
-        var decreases = 0
-        var maxDifference = 0
-        var minDifference = 10
-        report.zipWithNext { a, b ->
-            when {
-                a < b -> increases++
-                a > b -> decreases++
-                else -> Unit
-            }
-            val diff = (a - b).absoluteValue
-            if (diff > maxDifference) maxDifference = diff
-            if (diff < minDifference) minDifference = diff
+        if (isSafe(report)) {
+            safeReports++
         }
-        if ((increases == 0 || decreases == 0) && maxDifference <= 3 && minDifference >= 1) safeReports += 1
     }
 
     return safeReports
 }
 
+private fun isSafe(report: List<Int>): Boolean {
+    var increases = 0
+    var decreases = 0
+    var maxDifference = 0
+    var minDifference = 10
+
+    report.zipWithNext { a, b ->
+        when {
+            a < b -> increases++
+            a > b -> decreases++
+            else -> Unit
+        }
+        val diff = (a - b).absoluteValue
+        if (diff > maxDifference) maxDifference = diff
+        if (diff < minDifference) minDifference = diff
+    }
+
+    return (increases == 0 || decreases == 0) && maxDifference <= 3 && minDifference >= 1
+}
+
 private fun partTwo(input: List<List<Int>>): Int {
-    TODO()
+    var safeReports = 0
+
+    input.forEach outer@{ report ->
+        if (isSafe(report)) {
+            safeReports++
+        } else {
+            report.forEachIndexed { index, _ ->
+                val altered = report.toMutableList()
+                altered.removeAt(index)
+                if (isSafe(altered)) {
+                    safeReports++
+                    return@outer
+                }
+            }
+
+        }
+    }
+
+    return safeReports
 }
 
 private fun parseInput(filename: String): List<List<Int>> {
