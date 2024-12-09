@@ -3,7 +3,7 @@ package dk.vighdata
 fun main() {
     partOneTest()
 
-    val puzzleInput = readInput("Day03.txt").first()
+    val puzzleInput = readInput("Day03.txt").joinToString(" ")
     val resultPartOne = partOne(puzzleInput)
     println("Part One: $resultPartOne")
 
@@ -13,7 +13,7 @@ fun main() {
 }
 
 private fun partOneTest() {
-    val input = readInput("Day03_test.txt").first()
+    val input = readInput("Day03_test.txt").joinToString(" ")
     val result = partOne(input)
 
     assert(result == 161) { println("Test failed! Actual was: $result") }
@@ -21,27 +21,15 @@ private fun partOneTest() {
 }
 
 private fun partOne(input: String): Int {
-    val regex = """mul\(\d{1,3},\d{1,3}\)""".toRegex()
-    val result = regex.find(input)
+    val regex = """mul\((\d{1,3}),(\d{1,3})\)""".toRegex()
 
-    var sum = 0
-    var match: MatchResult? = result!!
-    while (match != null) {
-        sum += mul(match.value)
-        match = match.next()
+    return regex.findAll(input).asSequence().sumOf { result ->
+        val a = result.groupValues[1].toInt()
+        val b = result.groupValues[2].toInt()
+        println("$a * $b")
+        result.groupValues[1].toInt() * result.groupValues[2].toInt()
     }
 
-    return sum
-}
-
-private fun mul(mulStr: String): Int {
-    println(mulStr)
-    val regex = """\d{1,3},\d{1,3}""".toRegex()
-    val (num1, num2) = regex.find(mulStr)!!
-        .value.split(",")
-        .map { it.toInt() }
-
-    return num1 * num2
 }
 
 private fun partTwoTest(): Int {
