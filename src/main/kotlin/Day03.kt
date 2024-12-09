@@ -28,7 +28,6 @@ private fun partOne(input: String): Int {
         .sumOf { result ->
             result.groupValues[1].toInt() * result.groupValues[2].toInt()
         }
-
 }
 
 private fun partTwoTest() {
@@ -40,11 +39,12 @@ private fun partTwoTest() {
 }
 
 private fun partTwo(input: String): Int {
-    val filterRegex = """don't\(\).*do\(\)""".toRegex()
+    val doDontRegex = """(don't\(\)|do\(\))""".toRegex()
 
-    val cleaned = filterRegex.findAll(input).asSequence().map { result ->
-        val substr = result.groupValues[0]
-        input.replace(substr, "")
+    val cleaned = doDontRegex.findAll(input).asSequence().zipWithNext { a, b ->
+        input.substring(a.range.first, b.range.first)
+    }.filterNot {
+        it.startsWith("don't()")
     }.joinToString("")
 
     return partOne(cleaned)
