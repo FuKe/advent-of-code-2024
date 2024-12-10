@@ -41,11 +41,14 @@ private fun partTwoTest() {
 private fun partTwo(input: String): Int {
     val doDontRegex = """(don't\(\)|do\(\))""".toRegex()
 
-    val cleaned = doDontRegex.findAll(input).asSequence().zipWithNext { a, b ->
-        input.substring(a.range.first, b.range.first)
-    }.filterNot {
-        it.startsWith("don't()")
-    }.joinToString("")
+    val cleaned = doDontRegex.findAll(input).asSequence().map { it.range.first }
+        .plus(sequenceOf(0, input.length - 1))
+        .sorted()
+        .zipWithNext { start, end ->
+            input.substring(start, end)
+        }.filterNot {
+            it.startsWith("don't()")
+        }.joinToString("")
 
     return partOne(cleaned)
 }
