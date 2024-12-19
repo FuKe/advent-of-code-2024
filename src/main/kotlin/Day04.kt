@@ -40,8 +40,6 @@ private fun scanHorizontally(input: Map<Pair<Int, Int>, Char>): Int {
         count += detectXmas(char, nextChars, previousChars)
     }
 
-    println("Horizontal count: $count")
-
     return count
 }
 
@@ -58,7 +56,6 @@ private fun scanVertically(input: Map<Pair<Int, Int>, Char>): Int {
         count += detectXmas(char, nextChars, previousChars)
     }
 
-    println("Vertical count: $count")
     return count
 }
 
@@ -84,8 +81,6 @@ private fun scanDiagonally(input: Map<Pair<Int, Int>, Char>): Int {
         count += detectXmas(char, rightUp, leftDown)
     }
 
-    println("Diagonal count: $count")
-
     return count
 }
 
@@ -109,8 +104,7 @@ private fun partTwoTest() {
     val input = parseInput("${day}_test.txt")
     val result = partTwo(input)
 
-    TODO()
-    // assert(result == 48) { println("Test failed! Actual was: $result") }
+    assert(result == 9) { println("Test failed! Actual was: $result") }
     println("partTwoTest successful!")
 }
 
