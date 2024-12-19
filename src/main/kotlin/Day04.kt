@@ -98,7 +98,7 @@ private fun detectXmas(current: Char, nextChars: List<Char>, previousChars: List
     }
 
     if (previousChars.size == 3) {
-        val result = nextChars.joinToString("").reversed() + current
+        val result =  current + previousChars.joinToString("")
         if (result == "XMAS") count++
     }
 
