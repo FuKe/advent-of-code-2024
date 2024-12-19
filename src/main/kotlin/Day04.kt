@@ -84,21 +84,10 @@ private fun scanDiagonally(input: Map<Pair<Int, Int>, Char>): Int {
     return count
 }
 
-private fun detectXmas(current: Char, nextChars: List<Char>, previousChars: List<Char>): Int {
-    var count = 0
-
-    if (nextChars.size == 3) {
-        val result = current + nextChars.joinToString("")
-        if (result == "XMAS") count++
-    }
-
-    if (previousChars.size == 3) {
-        val result =  current + previousChars.joinToString("")
-        if (result == "XMAS") count++
-    }
-
-    return count
-}
+private fun detectXmas(current: Char, nextChars: List<Char>, previousChars: List<Char>): Int =
+    listOf(nextChars, previousChars).sumOf { chars ->
+        if (current + chars.joinToString("") == "XMAS") 1L else 0L
+    }.toInt()
 
 private fun partTwoTest() {
     val input = parseInput("${day}_test.txt")
